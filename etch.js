@@ -1,3 +1,4 @@
+const styleEl = document.querySelector("style");
 const containerDiv = document.querySelector(".container");
 const squareDiv = document.createElement("div");
 squareDiv.className = "square-div";
@@ -13,14 +14,13 @@ function generateSquares(count) {
     containerDiv.appendChild(clonedNode);
     squareTotal++;
   }
-  const squares = document.querySelectorAll(".square-div");
+  const squares = document.querySelectorAll(".square-div"); //only for logging the total squares node.
   console.log(squares);
-  squares.forEach((element) => {
-    element.setAttribute(
-      "style",
-      `flex: 0 0 ${100 / squareDimension}%; height: ${100 / squareDimension}vh`
-    );
-  });
+  styleEl.textContent = `
+    .square-div {
+    flex: 0 0 ${100 / squareDimension}%; height: ${100 / squareDimension}vh
+    }
+  `;
 }
 
 generateSquares(10);
@@ -32,15 +32,16 @@ button.addEventListener("click", changeSquareButtonHandler);
 
 function changeSquareButtonHandler() {
   let input = window.prompt("How much square per row? max = 100", 16);
-  if (input === "" || parseInt(input) === NaN) {
-    squareCount = 16;
+  let countInput = parseInt(input);
+  if (countInput < 0 || isNaN(countInput)) {
+    alert("How could i create squares?");
+    generateSquares(16);
+    return;
   } else {
-    let countInput = parseInt(input);
     if (countInput > 100) {
       alert("Too much squares!");
+      generateSquares(16);
       return;
-    } else if (countInput < 0) {
-      alert("How could i create squares?");
     }
     generateSquares(countInput);
   }
