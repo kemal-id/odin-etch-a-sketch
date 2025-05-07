@@ -21,6 +21,26 @@ function generateSquares(count) {
     flex: 0 0 ${100 / squareDimension}%; height: ${100 / squareDimension}vh
     }
   `;
+
+  squares.forEach((element) => {
+    let interaction = 0;
+    element.addEventListener("mouseover", () => {
+      let randomValue = [];
+      for (let i = 0; i < 3; i++) {
+        randomValue.push(Math.floor(Math.random() * 255));
+      }
+      element.setAttribute(
+        "style",
+        `background-color: rgb(${randomValue[0]}, ${randomValue[1]}, ${
+          randomValue[2]
+        });
+        opacity: ${(10 - interaction) * 10}%`
+      );
+      if (interaction < 10) {
+        interaction++;
+      }
+    });
+  });
 }
 
 generateSquares(10);
